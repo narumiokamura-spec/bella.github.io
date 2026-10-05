@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BELLA｜Q＆A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Shippori+Mincho:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f6f4ef;
+  --ink:#2b2926;
+  --gray:#8b837a;
+  --line:rgba(43,41,38,.12);
+  --taupe:#ded8cc;
+  --white:#fffefb;
+  --shell:#e9e5dc;
+  --radius:16px;
+  --ease:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(120% 90% at 50% -10%, #ffffff 0%, rgba(255,255,255,0) 55%),
+    linear-gradient(180deg,#efece4 0%, #e7e3da 45%, #e2ded5 100%);
+  background-attachment:fixed;
+  color:var(--ink);
+  font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  font-weight:400;
+  line-height:1.9;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  padding:clamp(16px,4vw,56px) clamp(12px,3vw,32px);
+}
+.page{max-width:860px;margin:0 auto}
+.card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 24px 60px -30px rgba(43,41,38,.35), 0 2px 10px rgba(43,41,38,.06);
+  overflow:hidden;
+}
+
+/* ---------- header ---------- */
+.card-head{
+  position:relative;
+  padding:clamp(34px,6vw,58px) clamp(20px,5vw,56px) clamp(26px,4vw,40px);
+  text-align:center;
+  background:linear-gradient(180deg,#faf9f5 0%, #f6f4ef 100%);
+  border-bottom:1px solid var(--line);
+}
+.card-head::before{
+  content:"";
+  position:absolute;inset:10px;
+  border:1px solid rgba(222,216,204,.7);
+  border-radius:10px;
+  pointer-events:none;
+}
+.brand{
+  font-family:"Cormorant Garamond",serif;
+  font-weight:500;
+  font-size:clamp(1.15rem,2.6vw,1.5rem);
+  letter-spacing:.42em;
+  text-indent:.42em;
+  color:var(--ink);
+}
+.brand-rule{
+  width:34px;height:1px;background:var(--taupe);
+  margin:14px auto 16px;
+}
+h1{
+  font-family:"Shippori Mincho","Noto Serif JP",serif;
+  font-weight:500;
+  font-size:clamp(1.6rem,4.4vw,2.25rem);
+  letter-spacing:.22em;
+  text-indent:.22em;
+  margin:0;
+  line-height:1.3;
+}
+.sub{
+  margin:10px 0 0;
+  font-size:.78rem;
+  letter-spacing:.3em;
+  text-indent:.3em;
+  color:var(--gray);
+  font-weight:300;
+}
+
+/* ---------- main ---------- */
+main{padding:clamp(20px,4vw,40px) clamp(14px,4vw,44px) clamp(8px,2vw,14px)}
+
+/* ---------- group ---------- */
+.group{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:linear-gradient(180deg,#fbfaf7,#f7f5f0);
+  margin-bottom:14px;
+  transition:box-shadow .4s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
+}
+.group:hover{box-shadow:0 10px 26px -18px rgba(43,41,38,.4)}
+.group.open{background:var(--white);border-color:rgba(43,41,38,.2);box-shadow:0 14px 34px -24px rgba(43,41,38,.5)}
+.group-head{
+  width:100%;
+  display:flex;align-items:center;gap:14px;
+  padding:clamp(16px,2.6vw,22px) clamp(16px,3vw,26px);
+  background:none;border:0;cursor:pointer;
+  font-family:"Shippori Mincho","Noto Serif JP",serif;
+  font-size:clamp(1rem,2.3vw,1.12rem);
+  font-weight:600;
+  letter-spacing:.1em;
+  color:var(--ink);
+  text-align:left;
+  border-radius:12px;
+}
+.group-head .label{flex:1;min-width:0}
+.group-head .count{
+  font-family:"Noto Sans JP",sans-serif;
+  font-size:.7rem;font-weight:400;letter-spacing:.08em;
+  color:var(--gray);
+  border:1px solid var(--taupe);
+  border-radius:999px;
+  padding:2px 10px;
+  white-space:nowrap;
+}
+.group-head .chev{
+  width:20px;height:20px;flex:none;color:var(--gray);
+  transition:transform .5s var(--ease), color .3s;
+}
+.group.open .group-head .chev{transform:rotate(180deg);color:var(--ink)}
+.group-panel{overflow:hidden;height:0;transition:height .55s var(--ease)}
+.group-body{
+  padding:2px clamp(12px,2.4vw,20px) clamp(14px,2.6vw,22px);
+}
+
+/* ---------- qa item ---------- */
+.qa{
+  border-top:1px solid rgba(222,216,204,.75);
+  opacity:0;
+  transform:translateY(8px);
+  animation:rise .55s var(--ease) forwards;
+}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .qa{animation:none;opacity:1;transform:none}
+  .group-panel,.chev{transition:none}
+}
+.qa-q{
+  width:100%;
+  display:flex;align-items:flex-start;gap:12px;
+  padding:16px 4px;
+  background:none;border:0;cursor:pointer;
+  color:var(--ink);
+  font-family:inherit;
+  font-size:clamp(.92rem,2vw,1rem);
+  font-weight:500;
+  line-height:1.75;
+  text-align:left;
+  transition:color .25s;
+}
+.qa-q:hover{color:#000}
+.qbadge{
+  flex:none;
+  width:22px;height:22px;margin-top:4px;
+  border:1px solid var(--ink);
+  border-radius:50%;
+  display:grid;place-items:center;
+  font-family:"Cormorant Garamond",serif;
+  font-size:.8rem;font-weight:600;line-height:1;
+  color:var(--ink);
+  transition:background .3s var(--ease),color .3s var(--ease);
+}
+.qa.on .qbadge{background:var(--ink);color:var(--cream)}
+.qa-q .txt{flex:1;min-width:0}
+.qa-q .sign{
+  flex:none;position:relative;width:14px;height:14px;margin-top:8px;
+  opacity:.65;
+  transition:opacity .3s;
+}
+.qa-q .sign::before,.qa-q .sign::after{
+  content:"";position:absolute;background:var(--ink);
+  transition:transform .45s var(--ease),opacity .3s;
+}
+.qa-q .sign::before{top:50%;left:0;width:14px;height:1px;transform:translateY(-50%)}
+.qa-q .sign::after{left:50%;top:0;width:1px;height:14px;transform:translateX(-50%)}
+.qa.on .qa-q .sign{opacity:1}
+.qa.on .qa-q .sign::after{transform:translateX(-50%) scaleY(0);opacity:0}
+.qa-a{overflow:hidden;height:0;transition:height .45s var(--ease)}
+.qa-a-inner{
+  padding:0 4px 20px 38px;
+  font-size:.93rem;
+  line-height:2;
+  color:#3d3a36;
+}
+.qa-a-inner p{margin:0}
+.qa-a-inner p + p{margin-top:10px}
+.qa-a-inner a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--taupe)}
+.qa-a-inner a:hover{border-color:var(--ink)}
+.answer-lead{
+  display:block;
+  font-family:"Shippori Mincho","Noto Serif JP",serif;
+  font-size:.82rem;
+  letter-spacing:.06em;
+  color:var(--gray);
+  margin-bottom:6px;
+}
+
+/* placeholder for items the client must confirm */
+.todo{
+  display:inline-block;
+  font-size:.72rem;font-weight:500;letter-spacing:.08em;
+  color:#8b5a3c;
+  background:rgba(139,90,60,.08);
+  border:1px dashed rgba(139,90,60,.45);
+  border-radius:4px;
+  padding:1px 7px;
+  margin-right:6px;
+}
+.shot{
+  margin-top:14px;
+  border:1px dashed var(--taupe);
+  border-radius:10px;
+  background:linear-gradient(180deg,#fbfaf7,#f5f3ee);
+  padding:24px 16px;
+  text-align:center;
+  font-size:.78rem;
+  letter-spacing:.06em;
+  color:var(--gray);
+}
+.example{
+  margin:12px 0 0;
+  padding:12px 16px;
+  border-left:2px solid var(--taupe);
+  background:#faf9f5;
+  font-size:.85rem;
+  color:#4a4742;
+  border-radius:0 8px 8px 0;
+}
+
+/* ---------- footer ---------- */
+.card-foot{
+  border-top:1px solid var(--line);
+  background:linear-gradient(180deg,#f8f7f3,#f4f2ec);
+  padding:clamp(24px,4vw,36px) clamp(20px,5vw,56px);
+  text-align:center;
+}
+.card-foot .msg{
+  font-family:"Shippori Mincho","Noto Serif JP",serif;
+  font-size:clamp(.9rem,2vw,1rem);
+  letter-spacing:.06em;
+  margin:0 0 16px;
+}
+.contact{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.88rem;letter-spacing:.04em;
+  color:var(--ink);text-decoration:none;
+  border:1px solid var(--ink);border-radius:999px;
+  padding:9px 22px;
+  transition:background .3s var(--ease),color .3s var(--ease);
+}
+.contact:hover{background:var(--ink);color:var(--cream)}
+.contact svg{width:15px;height:15px;flex:none}
+.meta{
+  margin:18px 0 0;
+  font-size:.72rem;line-height:1.9;letter-spacing:.04em;
+  color:var(--gray);
+}
+.copyright{
+  text-align:center;
+  font-family:"Cormorant Garamond",serif;
+  font-size:.78rem;letter-spacing:.28em;text-indent:.28em;
+  color:var(--gray);
+  margin:22px 0 0;
+}
+@media (max-width:560px){
+  .qa-a-inner{padding-left:0}
+  .group-head .count{display:none}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+
+    <header class="card-head">
+      <div class="brand">BELLA</div>
+      <div class="brand-rule" aria-hidden="true"></div>
+      <h1>Q＆A</h1>
+      <p class="sub">よくあるご質問</p>
+    </header>
+
+    <main>
+
+      <!-- ===== 仕事関連 ===== -->
+      <div class="group" data-group>
+        <button class="group-head" type="button" aria-expanded="false" aria-controls="panel-work">
+          <span class="label">仕事関連</span>
+          <span class="count">11件</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
+        </button>
+        <div class="group-panel" id="panel-work" role="region" aria-label="仕事関連の質問一覧">
+          <div class="group-body">
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">SNSで仕事のことを投稿してもいいですか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>NGです。クライアントから指定がない場合は撮影禁止です。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">ギャラはいつ支払われますか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>案件によって異なりますが、クライアントから事務所に着金した翌月末にご自身の口座に振り込まれます。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">お仕事やレッスンの際、急に体調が悪くなった場合は？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>すぐにマネージャーへ連絡してください。無断で休むことは絶対にやめてください。今後お仕事がもらえなくなる可能性があります。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">ファンからのDMに返信してもいい？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>原則NGです。トラブル防止のため、返信はしないようにしましょう。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">現場には何分前に到着すればいいですか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>10分前に到着が目安です。時間ギリギリや遅刻は厳禁。早く着きすぎるのも避けましょう。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">撮影当日の服装はどうすればいいですか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>案内があればその指示に従い、なければ清潔感のあるシンプルな服装で。ブランドロゴや派手な柄は避けましょう。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">メイクや髪型はどうしたらいい？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>撮影内容により異なりますが、基本はナチュラルで清潔感重視。指定がある場合は必ず守ってください。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">撮影に必要なものが不明な場合は？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>前日までにマネージャーに確認しましょう。自己判断で用意しないようにお願いします。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">他の出演者と話しても大丈夫？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>撮影の妨げにならないようにしましょう。また、初対面の方には敬語で丁寧に接しましょう。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">交通費は支給されますか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>案件によって異なります。案内文や契約内容を確認し、不明な場合はマネージャーへ連絡ください。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">何かトラブルや緊急時の際は？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>スタッフの方やマネージャーにすぐに連絡するようお願いします。</p>
+              </div></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== レッスン関連 ===== -->
+      <div class="group" data-group>
+        <button class="group-head" type="button" aria-expanded="false" aria-controls="panel-lesson">
+          <span class="label">レッスン関連</span>
+          <span class="count">7件</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
+        </button>
+        <div class="group-panel" id="panel-lesson" role="region" aria-label="レッスン関連の質問一覧">
+          <div class="group-body">
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">レッスンのスケジュールはいつ分かりますか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>講師との日程調整が終わり次第、順次公開しています。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">レッスンの予約はいつから？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>毎月1日の19時ごろから開始です。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">レッスンは1日に2つ以上受けてもいいの？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>枠が空いていれば可能です。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">レッスンは月何回受けれるの？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>月4回までご受講いただけます。スケジュールページからお好きな日程をお選びください。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">回数券は次月に繰り越せるの？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>回数券の繰り越しはできません。その月の有効期限内にすべてご利用ください。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">オンラインレッスンや対面レッスンの場所はどこを見たらわかるの？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>レッスン詳細よりスケジュール表をご確認ください。レッスン場所および担当講師を確認することが出来ます。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">レッスンの受講は必須ですか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>必須ではございませんが、レッスンを受けていないともらえない仕事などもあります。積極的にご受講ください。</p>
+              </div></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== その他 ===== -->
+      <div class="group" data-group>
+        <button class="group-head" type="button" aria-expanded="false" aria-controls="panel-other">
+          <span class="label">その他</span>
+          <span class="count">4件</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
+        </button>
+        <div class="group-panel" id="panel-other" role="region" aria-label="その他の質問一覧">
+          <div class="group-body">
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">マネージャーとのやり取りは何で行いますか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>文面でのやり取りはLINE。面談等の通話はGoogle Meetで行います。Googleアカウントをお持ちでない方は作成していただき、名前を本人様のお名前（カタカナ）で設定してください。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">宣材写真は全身写りますか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>全身写るので、靴までご準備をお願いいたします。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">宣材写真の日程はいつわかるの？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>カメラマンとの日程調整が終わり次第ご案内するかたちとなります。</p>
+              </div></div>
+            </div>
+
+            <div class="qa">
+              <button class="qa-q" type="button" aria-expanded="false">
+                <span class="qbadge">Q</span>
+                <span class="txt">お問い合わせはどこにすればいいですか？</span>
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+              <div class="qa-a"><div class="qa-a-inner">
+                <span class="answer-lead">A.</span>
+                <p>所属者専用LINEまでお願いいたします。</p>
+              </div></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setH(el, open){
+    var dur = reduce ? 0 : (parseFloat(getComputedStyle(el).transitionDuration) || 0) * 1000;
+    if (open){
+      el.style.height = el.scrollHeight + 'px';
+      window.setTimeout(function(){
+        if (el.dataset.open === '1') el.style.height = 'auto';
+      }, dur + 20);
+    } else {
+      if (el.style.height === 'auto') el.style.height = el.scrollHeight + 'px';
+      void el.offsetHeight;
+      el.style.height = '0px';
+    }
+  }
+
+  document.querySelectorAll('[data-group]').forEach(function(group){
+    var head = group.querySelector('.group-head');
+    var panel = group.querySelector('.group-panel');
+    var body = group.querySelector('.group-body');
+
+    head.addEventListener('click', function(){
+      var open = !group.classList.contains('open');
+      head.setAttribute('aria-expanded', open);
+      if (open){
+        group.classList.add('open');
+        panel.dataset.open = '1';
+        setH(panel, true);
+        // stagger inner items
+        group.querySelectorAll('.qa').forEach(function(qa, i){
+          qa.style.animation = 'none';
+          void qa.offsetHeight;
+          qa.style.animation = reduce ? 'none' : 'rise .5s cubic-bezier(.32,.72,0,1) ' + (i * 40) + 'ms forwards';
+        });
+      } else {
+        group.classList.remove('open');
+        panel.dataset.open = '0';
+        panel.style.height = panel.scrollHeight + 'px';
+        void panel.offsetHeight;
+        setH(panel, false);
+        panel.addEventListener('transitionend', function h(){
+          panel.removeEventListener('transitionend', h);
+          group.querySelectorAll('.qa.on').forEach(function(qa){
+            qa.classList.remove('on');
+            qa.querySelector('.qa-q').setAttribute('aria-expanded','false');
+            setH(qa.querySelector('.qa-a'), false);
+          });
+        });
+      }
+    });
+
+    // keep open group height correct on resize
+    window.addEventListener('resize', function(){
+      if (panel.dataset.open === '1' && panel.style.height !== 'auto'){
+        panel.style.height = body.scrollHeight + 'px';
+      }
+    });
+  });
+
+  document.querySelectorAll('.qa').forEach(function(qa){
+    var btn = qa.querySelector('.qa-q');
+    var ans = qa.querySelector('.qa-a');
+    btn.addEventListener('click', function(){
+      var open = !qa.classList.contains('on');
+      qa.classList.toggle('on', open);
+      btn.setAttribute('aria-expanded', open);
+      setH(ans, open);
+      // recalc parent panel when nested height changes
+      var panel = qa.closest('.group-panel');
+      if (panel && panel.dataset.open === '1'){
+        if (panel.style.height === 'auto'){
+          var group = panel.closest('.group');
+          if (group && group.classList.contains('open')){
+            // keep fluid
+          }
+        } else {
+          window.setTimeout(function(){ panel.style.height = panel.scrollHeight + 'px'; }, 460);
+        }
+      }
+    });
+  });
+})();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
